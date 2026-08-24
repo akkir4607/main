@@ -18,7 +18,7 @@ import Work from './pages/Work2';
 import Sara from './pages/Sara';
 import Phish from './pages/Phish';
 import Airguard from './pages/Airguard';
-import MGShare from './pages/MGShare';
+import MGShare from './pages/MgShare';
 import Contact from './pages/Contact';
 
 // Background Music
