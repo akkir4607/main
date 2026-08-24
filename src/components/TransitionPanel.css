@@ -1,0 +1,7 @@
+.transition-panel {
+  position: fixed;
+  inset: 0;
+  background: #111;
+  z-index: 55;
+  pointer-events: none;
+}

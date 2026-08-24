@@ -1,0 +1,1296 @@
+/* ===== VARIABLES ===== */
+:root {
+  --phish-primary: #00ff88;
+  --phish-primary-dim: rgba(0, 255, 136, 0.15);
+  --phish-primary-glow: rgba(0, 255, 136, 0.4);
+  --phish-danger: #ff4757;
+  --phish-danger-dim: rgba(255, 71, 87, 0.15);
+  --phish-danger-glow: rgba(255, 71, 87, 0.4);
+  --phish-warning: #ffa502;
+  --phish-bg: #0a0a0f;
+  --phish-surface: #12121a;
+  --phish-surface-2: #1a1a28;
+  --phish-border: rgba(255, 255, 255, 0.06);
+  --phish-text: #e8e8f0;
+  --phish-text-dim: #6b6b80;
+  --phish-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --phish-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+}
+
+/* ===== BASE ===== */
+.phish {
+  position: relative;
+  min-height: 100vh;
+  background: var(--phish-bg);
+  color: var(--phish-text);
+  font-family: var(--phish-font);
+  overflow: hidden;
+  padding: 6rem 1.5rem;
+}
+
+/* ===== BACKGROUND ===== */
+.phish__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.phish__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.phish__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+.phish__gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.3;
+}
+
+.phish__gradient-orb--1 {
+  width: 500px;
+  height: 500px;
+  background: var(--phish-primary);
+  top: -10%;
+  right: -5%;
+  animation: phishFloat 15s ease-in-out infinite;
+}
+
+.phish__gradient-orb--2 {
+  width: 400px;
+  height: 400px;
+  background: #6c5ce7;
+  bottom: 10%;
+  left: -10%;
+  animation: phishFloat 20s ease-in-out infinite reverse;
+}
+
+.phish__gradient-orb--3 {
+  width: 300px;
+  height: 300px;
+  background: #00b4d8;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: phishFloat 18s ease-in-out infinite 3s;
+}
+
+/* Matrix Characters */
+.phish__matrix-char {
+  position: absolute;
+  top: -20px;
+  font-family: var(--phish-mono);
+  font-size: 14px;
+  color: var(--phish-primary);
+  animation: matrixFall linear infinite;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes matrixFall {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--opacity, 0.1);
+  }
+  90% {
+    opacity: var(--opacity, 0.1);
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Particles */
+.phish__particle {
+  position: absolute;
+  background: var(--phish-primary);
+  border-radius: 50%;
+  animation: phishParticle linear infinite;
+}
+
+@keyframes phishParticle {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  25% {
+    opacity: var(--opacity, 0.3);
+  }
+  50% {
+    transform: translate(30px, -40px) scale(1.5);
+    opacity: var(--opacity, 0.3);
+  }
+  75% {
+    opacity: var(--opacity, 0.3);
+  }
+  100% {
+    transform: translate(-20px, -80px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes phishFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+}
+
+/* ===== CONTAINER ===== */
+.phish__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+.phish__header {
+  text-align: center;
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phish__header--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.phish__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: var(--phish-primary-dim);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--phish-primary);
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.phish__badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--phish-primary);
+  border-radius: 50%;
+  animation: phishPulse 2s ease-in-out infinite;
+}
+
+@keyframes phishPulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 var(--phish-primary-glow);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+.phish__headline {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.phish__headline-text {
+  background: linear-gradient(135deg, #ffffff 0%, var(--phish-primary) 50%, #00b4d8 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: phishGradient 5s ease infinite;
+}
+
+@keyframes phishGradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.phish__cursor {
+  -webkit-text-fill-color: var(--phish-primary);
+  animation: phishBlink 1s step-end infinite;
+  font-weight: 300;
+}
+
+@keyframes phishBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.phish__description {
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: var(--phish-text-dim);
+  line-height: 1.8;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ===== META CARDS ===== */
+.phish__meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 4rem;
+}
+
+.phish__meta--visible .phish__meta-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.phish__meta-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--phish-surface);
+  border: 1px solid var(--phish-border);
+  border-radius: 16px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: phishSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  overflow: hidden;
+  cursor: default;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phish__meta-card:hover {
+  border-color: rgba(0, 255, 136, 0.3);
+  transform: translateY(-4px) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px var(--phish-primary-dim);
+}
+
+.phish__meta-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, var(--phish-primary-dim), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.phish__meta-card:hover .phish__meta-glow {
+  opacity: 1;
+}
+
+@keyframes phishSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.phish__meta-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--phish-primary-dim);
+  border-radius: 12px;
+  flex-shrink: 0;
+  transition: all 0.4s ease;
+}
+
+.phish__meta-card:hover .phish__meta-icon {
+  background: rgba(0, 255, 136, 0.25);
+  box-shadow: 0 0 20px var(--phish-primary-dim);
+}
+
+.phish__meta-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--phish-primary);
+}
+
+.phish__meta-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.phish__meta-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--phish-text-dim);
+  font-weight: 500;
+}
+
+.phish__meta-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--phish-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== DEMO SECTION ===== */
+.phish__demo {
+  background: var(--phish-surface);
+  border: 1px solid var(--phish-border);
+  border-radius: 20px;
+  padding: 2rem;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+}
+
+.phish__demo--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.phish__demo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.phish__demo-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.phish__shield {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--phish-primary-dim);
+  border-radius: 14px;
+  transition: all 0.4s ease;
+}
+
+.phish__shield svg {
+  width: 24px;
+  height: 24px;
+  color: var(--phish-primary);
+}
+
+.phish__shield--pulse {
+  box-shadow: 0 0 30px var(--phish-primary-glow);
+  background: rgba(0, 255, 136, 0.25);
+}
+
+.phish__demo-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.phish__demo-subtitle {
+  font-size: 0.85rem;
+  color: var(--phish-text-dim);
+  margin: 2px 0 0;
+}
+
+.phish__demo-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--phish-primary-dim);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--phish-primary);
+}
+
+.phish__status-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--phish-primary);
+  border-radius: 50%;
+  animation: phishPulse 2s ease-in-out infinite;
+}
+
+/* URL Grid */
+.phish__url-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.phish__url-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--phish-surface-2);
+  border: 1px solid var(--phish-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+  color: var(--phish-text);
+  font-family: var(--phish-font);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.phish__url-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.02));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.phish__url-item:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.phish__url-item:hover::before {
+  opacity: 1;
+}
+
+.phish__url-item--active {
+  border-color: rgba(0, 255, 136, 0.3);
+  background: rgba(0, 255, 136, 0.05);
+}
+
+.phish__url-item--safe {
+  border-color: rgba(0, 255, 136, 0.4);
+  background: rgba(0, 255, 136, 0.08);
+}
+
+.phish__url-item--danger {
+  border-color: rgba(255, 71, 87, 0.4);
+  background: rgba(255, 71, 87, 0.08);
+}
+
+.phish__url-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.phish__url-item--safe .phish__url-icon {
+  background: var(--phish-primary-dim);
+  color: var(--phish-primary);
+}
+
+.phish__url-item--danger .phish__url-icon {
+  background: var(--phish-danger-dim);
+  color: var(--phish-danger);
+}
+
+.phish__url-icon svg {
+  width: 18px;
+  height: 18px;
+  color: var(--phish-text-dim);
+}
+
+.phish__url-item--safe .phish__url-icon svg {
+  color: var(--phish-primary);
+}
+
+.phish__url-item--danger .phish__url-icon svg {
+  color: var(--phish-danger);
+}
+
+.phish__url-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.phish__url-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--phish-text);
+}
+
+.phish__url-text {
+  font-size: 0.7rem;
+  font-family: var(--phish-mono);
+  color: var(--phish-text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.phish__url-arrow {
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+.phish__url-item:hover .phish__url-arrow {
+  opacity: 0.5;
+  transform: translateX(0);
+}
+
+.phish__url-arrow svg {
+  width: 16px;
+  height: 16px;
+  color: var(--phish-text-dim);
+}
+
+/* ===== TERMINAL ===== */
+.phish__terminal {
+  background: #0d0d14;
+  border: 1px solid var(--phish-border);
+  border-radius: 12px;
+  overflow: hidden;
+  animation: phishTerminalIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes phishTerminalIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.phish__terminal-bar {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--phish-border);
+}
+
+.phish__terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.phish__terminal-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.phish__terminal-dots span:nth-child(1) {
+  background: #ff5f57;
+}
+
+.phish__terminal-dots span:nth-child(2) {
+  background: #febc2e;
+}
+
+.phish__terminal-dots span:nth-child(3) {
+  background: #28c840;
+}
+
+.phish__terminal-title {
+  flex: 1;
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--phish-text-dim);
+  font-family: var(--phish-mono);
+}
+
+.phish__terminal-actions {
+  width: 44px;
+  text-align: right;
+}
+
+.phish__terminal-minimize {
+  color: var(--phish-text-dim);
+  font-size: 0.8rem;
+}
+
+.phish__terminal-body {
+  padding: 1.25rem;
+  font-family: var(--phish-mono);
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+
+.phish__scan-line {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.phish__prompt {
+  color: var(--phish-primary);
+  font-weight: 700;
+}
+
+.phish__command {
+  color: var(--phish-text-dim);
+  word-break: break-all;
+}
+
+.phish__scan-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.phish__scan-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.phish__scan-fill {
+  height: 100%;
+  background: var(--phish-primary);
+  border-radius: 4px;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px var(--phish-primary-glow);
+}
+
+.phish__scan-fill--safe {
+  background: var(--phish-primary);
+  box-shadow: 0 0 15px var(--phish-primary-glow);
+}
+
+.phish__scan-fill--danger {
+  background: var(--phish-danger);
+  box-shadow: 0 0 15px var(--phish-danger-glow);
+}
+
+.phish__scan-percent {
+  font-size: 0.75rem;
+  color: var(--phish-primary);
+  font-weight: 600;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Scan Steps */
+.phish__scan-step {
+  color: var(--phish-text-dim);
+  animation: phishStepIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 2px 0;
+}
+
+@keyframes phishStepIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.phish__check {
+  color: var(--phish-primary);
+  margin-right: 8px;
+}
+
+/* ===== RESULT ===== */
+.phish__result {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+  border-radius: 10px;
+  animation: phishResultIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes phishResultIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.phish__result--safe {
+  background: rgba(0, 255, 136, 0.06);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.phish__result--danger {
+  background: rgba(255, 71, 87, 0.06);
+  border: 1px solid rgba(255, 71, 87, 0.2);
+  animation: phishDangerShake 0.6s cubic-bezier(0.16, 1, 0.3, 1), phishDangerPulse 2s ease-in-out infinite 0.6s;
+}
+
+@keyframes phishDangerShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-3px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes phishDangerPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 71, 87, 0.1);
+  }
+}
+
+.phish__result-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.phish__result-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.phish__result--safe .phish__result-icon {
+  background: var(--phish-primary-dim);
+  color: var(--phish-primary);
+}
+
+.phish__result--danger .phish__result-icon {
+  background: var(--phish-danger-dim);
+  color: var(--phish-danger);
+}
+
+.phish__result-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.phish__result-title {
+  font-family: var(--phish-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+  letter-spacing: 1px;
+}
+
+.phish__result--safe .phish__result-title {
+  color: var(--phish-primary);
+}
+
+.phish__result--danger .phish__result-title {
+  color: var(--phish-danger);
+}
+
+.phish__result-desc {
+  font-size: 0.8rem;
+  color: var(--phish-text-dim);
+  margin: 0;
+  font-family: var(--phish-font);
+  line-height: 1.5;
+}
+
+/* Threat List */
+.phish__threat-list {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: rgba(255, 71, 87, 0.05);
+  border-radius: 8px;
+}
+
+.phish__threat-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--phish-danger);
+  margin-bottom: 8px;
+  font-family: var(--phish-font);
+}
+
+.phish__threat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--phish-text-dim);
+  padding: 3px 0;
+  font-family: var(--phish-font);
+  animation: phishStepIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phish__threat-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--phish-danger);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Result Stats */
+.phish__result-stats {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.phish__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.phish__stat-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--phish-text-dim);
+  font-family: var(--phish-font);
+}
+
+.phish__stat-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--phish-text);
+}
+
+/* ===== SCAN HISTORY ===== */
+.phish__history {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--phish-border);
+  animation: phishStepIn 0.5s ease;
+}
+
+.phish__history-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  color: var(--phish-text-dim);
+}
+
+.phish__history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.phish__history-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  animation: phishStepIn 0.3s ease;
+}
+
+.phish__history-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.phish__history-dot--safe {
+  background: var(--phish-primary);
+}
+
+.phish__history-dot--danger {
+  background: var(--phish-danger);
+}
+
+.phish__history-url {
+  flex: 1;
+  font-family: var(--phish-mono);
+  color: var(--phish-text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.phish__history-time {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .phish {
+    padding: 4rem 1.25rem;
+  }
+
+  .phish__meta {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .phish__url-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .phish__demo {
+    padding: 1.5rem;
+  }
+
+  .phish__result-stats {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .phish {
+    padding: 3rem 1rem;
+  }
+
+  .phish__header {
+    margin-bottom: 2.5rem;
+  }
+
+  .phish__meta {
+    margin-bottom: 2.5rem;
+  }
+
+  .phish__demo {
+    padding: 1.25rem;
+    border-radius: 14px;
+  }
+
+  .phish__demo-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .phish__url-item {
+    padding: 0.85rem 1rem;
+  }
+
+  .phish__terminal-body {
+    padding: 1rem;
+    font-size: 0.72rem;
+  }
+
+  .phish__result-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .phish__result-stats {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .phish__gradient-orb--1 {
+    width: 250px;
+    height: 250px;
+  }
+
+  .phish__gradient-orb--2 {
+    width: 200px;
+    height: 200px;
+  }
+
+  .phish__gradient-orb--3 {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 380px) {
+  .phish__url-text {
+    font-size: 0.62rem;
+  }
+
+  .phish__meta-value {
+    font-size: 0.85rem;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .phish__particle,
+  .phish__matrix-char,
+  .phish__gradient-orb,
+  .phish__badge-dot,
+  .phish__cursor {
+    animation: none !important;
+  }
+
+  .phish__headline-text {
+    animation: none !important;
+  }
+
+  .phish__meta-card,
+  .phish__url-item,
+  .phish__demo {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== SCROLLBAR ===== */
+.phish ::-webkit-scrollbar {
+  width: 4px;
+}
+
+.phish ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.phish ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* ===== SELECTION ===== */
+.phish ::selection {
+  background: var(--phish-primary-dim);
+  color: var(--phish-primary);
+}
+/* ============================================================
+   NEXT PROJECT — Bold 3D Text Style
+   ============================================================ */
+.phish__next {
+  margin-top: 6rem;
+  padding: 4rem 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.25rem;
+  perspective: 1400px;
+  perspective-origin: 50% 30%;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
+  border-top: 1px solid var(--phish-border);
+  position: relative;
+}
+
+.phish__next--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.phish__next-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--phish-text-dim);
+  padding-right: 0.5rem;
+}
+
+.phish__next-line {
+  display: inline-block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--phish-primary));
+}
+
+.phish__next-link {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 0.3em;
+  padding-right: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transform: translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.phish__next-link:hover {
+  transform: translateX(-0.8vw);
+}
+
+/* Meta: year + slash */
+.phish__next-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  padding-top: 0.4em;
+  user-select: none;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phish__next-year {
+  font-family: var(--phish-font);
+  font-size: clamp(0.6rem, 0.75vw, 0.75rem);
+  font-weight: 600;
+  color: var(--phish-text);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 0.15em;
+  opacity: 0.85;
+}
+
+.phish__next-slash {
+  font-family: 'Arial Black', 'Haettenschweiler', Impact, sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.3rem, 2.6vw, 2.1rem);
+  line-height: 1;
+  color: var(--phish-text);
+  transform: rotate(12deg);
+  display: inline-block;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Name — the big 3D text */
+.phish__next-name {
+  position: relative;
+  display: block;
+  font-family: 'Arial Black', 'Haettenschweiler', Impact, 'Franklin Gothic Heavy', sans-serif;
+  font-weight: 900;
+  font-size: clamp(4rem, 12vw, 12rem);
+  line-height: 0.78;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  text-align: right;
+  color: var(--phish-text);
+  -webkit-text-stroke: 0 transparent;
+  paint-order: stroke fill;
+  transform: rotateX(28deg) rotateZ(-2deg);
+  transform-origin: center bottom;
+  transition:
+    color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    -webkit-text-stroke 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: color, -webkit-text-stroke, transform;
+}
+
+/* Hover — flattens and becomes outlined with green (matches phish theme) */
+.phish__next-link:hover .phish__next-name {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--phish-primary);
+  transform: rotateX(0deg) rotateZ(0deg);
+  filter: drop-shadow(0 0 20px var(--phish-primary-dim));
+}
+
+.phish__next-link:hover .phish__next-year,
+.phish__next-link:hover .phish__next-slash {
+  opacity: 0.35;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .phish__next-name {
+    font-size: clamp(2.6rem, 9.5vw, 5.2rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .phish__next {
+    margin-top: 4rem;
+    padding: 3rem 0 1.5rem;
+  }
+
+  .phish__next-name {
+    font-size: clamp(2.1rem, 12vw, 3.9rem);
+    -webkit-text-stroke: 0;
+  }
+
+  .phish__next-link:hover .phish__next-name {
+    -webkit-text-stroke: 1.5px var(--phish-primary);
+  }
+
+  .phish__next-slash {
+    font-size: clamp(1rem, 3vw, 1.4rem);
+  }
+
+  .phish__next-label {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .phish__next-name {
+    font-size: clamp(1.9rem, 13vw, 3rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phish__next-name,
+  .phish__next-link {
+    transition: none !important;
+    transform: none !important;
+  }
+}

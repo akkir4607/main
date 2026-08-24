@@ -1,0 +1,403 @@
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #000000;
+  --text-fill: #ffffff;
+  --text-white: #ffffff;
+  --font-display: 'Arial Black', 'Haettenschweiler', Impact, 'Franklin Gothic Heavy', sans-serif;
+  --font-ui: 'Arial', 'Helvetica Neue', sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-white);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, li {
+  list-style: none;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.portfolio {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* ============================================================
+   BACKGROUND VIDEO
+   ============================================================ */
+.bg-video-wrapper {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* ============================================================
+   STAGE
+   ============================================================ */
+.stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  padding: 10vh 0 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.projects-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 3vw;
+  gap: 10px;
+  perspective: 1400px;
+  perspective-origin: 50% 30%;
+}
+
+/* ============================================================
+   PROJECT ITEMS
+   ============================================================ */
+.project-item {
+  position: relative;
+  width: max-content;
+  max-width: min(90vw, 1400px);
+  margin-bottom: -0.52em;
+  opacity: 0;
+  transform: translateY(56px);
+  transition:
+    opacity 0.9s var(--ease),
+    filter 0.6s var(--ease),
+    transform 0.9s var(--ease);
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.is-mounted .project-item {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 1s var(--ease) calc(var(--i) * 0.06s),
+    transform 1s var(--ease) calc(var(--i) * 0.06s),
+    filter 0.6s var(--ease);
+}
+
+.project-link {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 0.3em;
+  cursor: pointer;
+  transform: translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 0.7s var(--ease);
+  will-change: transform;
+}
+
+/* meta: year + slash */
+.project-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  padding-top: 0.4em;
+  user-select: none;
+}
+
+.project-year {
+  font-family: var(--font-ui);
+  font-size: clamp(0.6rem, 0.75vw, 0.75rem);
+  font-weight: 600;
+  color: var(--text-fill);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 0.15em;
+  opacity: 0.85;
+  transition: opacity 0.5s var(--ease);
+}
+
+.project-slash {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.3rem, 2.6vw, 2.1rem);
+  line-height: 1;
+  color: var(--text-fill);
+  transform: rotate(12deg);
+  display: inline-block;
+  transition: opacity 0.5s var(--ease);
+}
+
+/* name */
+.project-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(4rem, 12vw, 12rem);
+  line-height: 0.78;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  text-align: right;
+  color: var(--text-fill);
+  -webkit-text-stroke: 0 transparent;
+  paint-order: stroke fill;
+  transform: rotateX(28deg) rotateZ(-2deg);
+  transform-origin: center bottom;
+  transition:
+    color 0.6s var(--ease),
+    -webkit-text-stroke 0.6s var(--ease),
+    text-stroke 0.6s var(--ease),
+    transform 0.7s var(--ease);
+  will-change: color, -webkit-text-stroke, transform;
+}
+
+/* ============================================================
+   HOVER
+   ============================================================ */
+.projects-list.has-hover .project-item:not(.is-hovered) {
+  opacity: 0.22;
+  filter: blur(0.4px);
+  transition:
+    opacity 0.7s var(--ease),
+    filter 0.7s var(--ease);
+}
+
+.project-item.is-hovered {
+  opacity: 1;
+  filter: none;
+  z-index: 5;
+  transform: translateY(0);
+  transition:
+    opacity 0.7s var(--ease),
+    filter 0.7s var(--ease),
+    transform 0.8s var(--ease);
+}
+
+.project-item.is-hovered .project-link {
+  transform: translateX(-0.4vw);
+}
+
+.project-item.is-hovered .project-name {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--text-fill);
+  transform: rotateX(0deg) rotateZ(0deg);
+}
+
+.project-item.is-hovered .project-year,
+.project-item.is-hovered .project-slash {
+  opacity: 0.35;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 3vw 18px 4vw;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.site-footer > * {
+  pointer-events: all;
+}
+
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.logo-block {
+  display: inline-flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  line-height: 0.95;
+  color: var(--text-white);
+  letter-spacing: 0.01em;
+  padding: 10px 12px 8px;
+  transition: opacity 0.3s var(--ease);
+}
+
+.logo-block:hover {
+  opacity: 0.8;
+}
+
+.footer-meta {
+  display: flex;
+  gap: 2vw;
+  margin-top: 6px;
+}
+
+.footer-meta p,
+.footer-email {
+  font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  color: var(--text-white);
+  line-height: 1.55;
+  opacity: 0.9;
+}
+
+.footer-email:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   MOBILE HEADER
+   ============================================================ */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 100;
+}
+
+.mobile-logo {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--text-white);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .project-name {
+    font-size: clamp(2.6rem, 9.5vw, 5.2rem);
+  }
+
+  .project-item {
+    max-width: 88vw;
+    margin-bottom: -0.4em;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+  }
+
+  .site-footer {
+    display: none;
+  }
+
+  .stage {
+    padding: 100px 0 48px;
+  }
+
+  .projects-list {
+    padding-right: 7vw;
+    gap: 20px;
+  }
+
+  .project-name {
+    font-size: clamp(2.1rem, 12vw, 3.9rem);
+    -webkit-text-stroke: 0;
+  }
+
+  .project-item.is-hovered .project-name {
+    -webkit-text-stroke: 1.5px var(--text-fill);
+  }
+
+  .project-slash {
+    font-size: clamp(1rem, 3vw, 1.4rem);
+  }
+
+  .project-item {
+    margin-bottom: -0.32em;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-name {
+    font-size: clamp(1.9rem, 13vw, 3rem);
+  }
+
+  .project-item {
+    max-width: 94vw;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .project-item,
+  .is-mounted .project-item,
+  .project-link,
+  .project-name,
+  .projects-list.has-hover .project-item:not(.is-hovered) {
+    transition: none !important;
+    filter: none !important;
+  }
+
+  .project-link,
+  .project-item.is-hovered .project-link,
+  .project-name,
+  .project-item.is-hovered .project-name {
+    transform: none !important;
+  }
+
+  .bg-video {
+    display: none;
+  }
+}

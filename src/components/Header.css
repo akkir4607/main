@@ -1,0 +1,228 @@
+/* =========================
+   HEADER (overlay, no black bar)
+========================= */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-start;
+  padding: 30px 5vw;
+  height: auto;
+  min-height: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  outline: none;
+  box-shadow: none !important;
+  transition: padding 0.4s ease;
+  pointer-events: none;
+}
+
+.site-header > * {
+  pointer-events: auto;
+}
+
+.site-header.is-scrolled {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none;
+  padding: 16px 5vw;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo-link {
+  grid-column: 1;
+  justify-self: start;
+  text-decoration: none;
+  color: #fff;
+  display: block;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+.logo-link:focus,
+.logo-link:active {
+  outline: none;
+  border: 0;
+  box-shadow: none;
+}
+
+.site-logo {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Arial Black', Impact, sans-serif;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  pointer-events: none;
+  color: #fff;
+}
+
+.hide-overflow {
+  display: block;
+  overflow: hidden;
+}
+
+.hide-overflow span {
+  display: block;
+}
+
+/* =========================
+   ACTIVE / PAGE TRANSITION LOGO
+========================= */
+
+.site-logo.is-active {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  z-index: 60;
+  color: #fff;
+  text-align: center;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.site-nav {
+  grid-column: 2;
+  justify-self: end;
+}
+
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav li {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.site-nav a {
+  text-decoration: none;
+  color: #fff;
+  border: 0;
+  outline: none;
+  transition:
+    opacity 0.3s ease,
+    color 0.3s ease;
+}
+
+.site-nav a:hover {
+  opacity: 0.5;
+}
+
+.site-nav a:focus,
+.site-nav a:active {
+  outline: none;
+  border: 0;
+}
+
+.nav-num {
+  font-size: 0.6rem;
+  margin-right: 12px;
+  opacity: 0.6;
+  color: #fff;
+}
+
+/* =========================
+   BACK ARROW
+========================= */
+
+.back-arrow {
+  grid-column: 2;
+  justify-self: end;
+  color: #fff;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.back-arrow:hover {
+  transform: translateX(-5px);
+  opacity: 0.7;
+}
+
+.back-arrow:focus,
+.back-arrow:active {
+  outline: none;
+  border: 0;
+}
+
+.back-arrow svg {
+  color: #fff;
+  stroke: #fff;
+}
+
+/* =========================
+   HERO – start at very top under header
+========================= */
+
+.preview-page,
+.preview-hero,
+.hero-image-wrapper,
+.duotone-image {
+  margin-top: 0;
+  padding-top: 0;
+  border: 0;
+}
+
+.preview-hero {
+  position: relative;
+  width: 100%;
+}
+
+.preview-page {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .site-header {
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    padding: 20px 6vw;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .back-arrow {
+    grid-column: 2;
+    justify-self: end;
+  }
+
+  .site-logo {
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+  }
+}
