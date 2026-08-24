@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import './Phish.css';
+import './phish.css';
 
 const Phish = () => {
   const [isVisible, setIsVisible] = useState(false);
