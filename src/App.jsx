@@ -18,7 +18,7 @@ import Work from './pages/Work2';
 import Sara from './pages/Sara';
 import Phish from './pages/Phish';
 import Airguard from './pages/Airguard';
-import MGShare from './pages/MgShare';
+import MGShare from './pages/MGShare';
 import Contact from './pages/Contact';
 
 // Background Music
@@ -75,11 +75,8 @@ export default function App() {
   // ============================================================
 
   useEffect(() => {
-    // Try autoplay
     startMusic();
 
-    // If browser blocks autoplay,
-    // start music on first interaction.
     const handleInteraction = () => {
       startMusic();
 
@@ -106,7 +103,6 @@ export default function App() {
   const finishLoading = () => {
     setLoading(false);
 
-    // Try to start background music after preloader
     setTimeout(() => {
       startMusic();
     }, 100);
@@ -118,10 +114,6 @@ export default function App() {
 
   return (
     <>
-      {/* ========================================================
-          BACKGROUND MUSIC
-          ======================================================== */}
-
       <audio
         ref={audioRef}
         src={m10}
@@ -129,16 +121,11 @@ export default function App() {
         preload="auto"
       />
 
-      {/* ========================================================
-          PRELOADER
-          ======================================================== */}
-
       {loading ? (
         <Preloader onFinish={finishLoading} />
       ) : (
         <Router>
           <TransitionProvider>
-
             <Header />
 
             <TransitionPanel />
@@ -146,7 +133,6 @@ export default function App() {
             <main className="main-content">
               <AnimatedRoutes />
             </main>
-
           </TransitionProvider>
         </Router>
       )}
