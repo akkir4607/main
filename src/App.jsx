@@ -18,7 +18,7 @@ import Work from './pages/Work2';
 import Sara from './pages/Sara';
 import Phish from './pages/phish';
 import Airguard from './pages/Airguard';
-import M from './pages/M';
+import MGShare from './pages/MGShare';
 import Contact from './pages/Contact';
 
 // Background Music
@@ -36,7 +36,7 @@ function AnimatedRoutes() {
       <Route path="/sara" element={<Sara />} />
       <Route path="/phish" element={<Phish />} />
       <Route path="/airguard" element={<Airguard />} />
-      <Route path="/mgshare" element={<M />} />
+      <Route path="/mgshare" element={<MGShare />} />
       <Route path="/contact" element={<Contact />} />
     </Routes>
   );

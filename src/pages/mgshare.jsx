@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import './m.css';
+import './MGShare.css';
 
 const MGShare = () => {
   const [transferProgress, setTransferProgress] = useState(0);
