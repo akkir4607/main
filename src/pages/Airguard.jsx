@@ -599,7 +599,7 @@ const Airguard = () => {
             NEXT PROJECT
           </span>
 
-          <Link to="/mgshare" className="airguard__next-link">
+          <Link to="/m" className="airguard__next-link">
             <span className="airguard__next-meta">
               <span className="airguard__next-year">2024</span>
               <span className="airguard__next-slash">/</span>
