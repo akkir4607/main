@@ -16,7 +16,7 @@ import About from './pages/About';
 import Preview from './pages/Preview';
 import Work from './pages/Work2';
 import Sara from './pages/Sara';
-import Phish from './pages/Phish';
+import Phish from './pages/phish';
 import Airguard from './pages/Airguard';
 import M from './pages/M';
 import Contact from './pages/Contact';
