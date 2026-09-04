@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import m3 from '../images/m3.mp4'
+import AboutReveal from './AboutReveal'
+import Work2 from './Work2'
 import './Port.css'
 
 const projects = [
@@ -24,9 +26,7 @@ export default function Portfolio() {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        // Autoplay may be blocked by the browser.
-      })
+      videoRef.current.play().catch(() => {})
     }
   }, [])
 
@@ -61,111 +61,110 @@ export default function Portfolio() {
       animate="animate"
       exit="exit"
     >
-      {/* Background Video */}
-      <div className="bg-video-wrapper">
-        <video
-          ref={videoRef}
-          className="bg-video"
-          src={m3}
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-        <div className="bg-video-overlay" />
-      </div>
+      {/* ── Hero Section ── */}
+      <section className="hero-section">
+        {/* Background Video */}
+        <div className="bg-video-wrapper">
+          <video
+            ref={videoRef}
+            className="bg-video"
+            src={m3}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          <div className="bg-video-overlay" />
+        </div>
 
-      {/* Mobile Header */}
-      <header className="mobile-header">
-        <Link to="/" className="mobile-logo">
-          <span></span>
-          <span></span>
-        </Link>
-      </header>
-
-      {/* Main */}
-      <main className="stage" ref={listRef}>
-        <ul
-          className={`projects-list${
-            hoveredIndex !== null ? ' has-hover' : ''
-          }`}
-        >
-          {projects.map((project, i) => {
-            const isInternal = project.url.startsWith('/')
-
-            const linkContent = (
-              <>
-                <span className="project-meta">
-                  <span className="project-year">{project.year}</span>
-                  <span className="project-slash">/</span>
-                </span>
-
-                <span className="project-name">
-                  {project.name}
-                </span>
-              </>
-            )
-
-            return (
-              <li
-                key={project.id}
-                className={`project-item${
-                  hoveredIndex === i ? ' is-hovered' : ''
-                }`}
-                style={{ '--i': i }}
-                onMouseEnter={() => setHoveredIndex(i)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                {isInternal ? (
-                  <Link
-                    to={project.url}
-                    className="project-link"
-                  >
-                    {linkContent}
-                  </Link>
-                ) : (
-                  <a
-                    href={project.url}
-                    className="project-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {linkContent}
-                  </a>
-                )}
-              </li>
-            )
-          })}
-        </ul>
-      </main>
-
-      {/* Footer */}
-      <footer className="site-footer">
-        <div className="footer-col footer-logo">
-          <Link to="/" className="logo-block">
-            <span></span>
+        {/* Mobile Header */}
+        <header className="mobile-header">
+          <Link to="/" className="mobile-logo">
             <span></span>
             <span></span>
           </Link>
+        </header>
 
-          <div className="footer-meta">
-            <div>
-              <p>Check it out</p>
-            </div>
+        {/* Main */}
+        <main className="stage" ref={listRef}>
+          <ul
+            className={`projects-list${
+              hoveredIndex !== null ? ' has-hover' : ''
+            }`}
+          >
+            {projects.map((project, i) => {
+              const isInternal = project.url.startsWith('/')
 
-            <div>
-              <p>Portland of</p>
+              const linkContent = (
+                <>
+                  <span className="project-meta">
+                    <span className="project-year">{project.year}</span>
+                    <span className="project-slash">/</span>
+                  </span>
+                  <span className="project-name">{project.name}</span>
+                </>
+              )
 
-              <a
-                href="mailto:akkir4607@gmail.com"
-                className="footer-email"
-              >
-                akkir4607@gmail.com
-              </a>
+              return (
+                <li
+                  key={project.id}
+                  className={`project-item${
+                    hoveredIndex === i ? ' is-hovered' : ''
+                  }`}
+                  style={{ '--i': i }}
+                  onMouseEnter={() => setHoveredIndex(i)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  {isInternal ? (
+                    <Link to={project.url} className="project-link">
+                      {linkContent}
+                    </Link>
+                  ) : (
+                    <a
+                      href={project.url}
+                      className="project-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {linkContent}
+                    </a>
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        </main>
+
+        {/* Footer */}
+        <footer className="site-footer">
+          <div className="footer-col footer-logo">
+            <Link to="/" className="logo-block">
+              <span></span>
+              <span></span>
+              <span></span>
+            </Link>
+
+            <div className="footer-meta">
+              <div>
+                <p>Check it out</p>
+              </div>
+              <div>
+                <p>Portland of</p>
+                <a
+                  href="mailto:akkir4607@gmail.com"
+                  className="footer-email"
+                >
+                  akkir4607@gmail.com
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </section>
+
+      {/* ── About Reveal (below hero) ── */}
+      <AboutReveal />
+      <Work2 />
     </motion.div>
   )
 }

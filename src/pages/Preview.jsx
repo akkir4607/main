@@ -165,6 +165,7 @@ const projects = [
   { id: 2, name: 'PHISH', desc: 'Security Scanner', color: '#00ff88', link: '/work', pos: [-9, 2.5, -6], icon: '🛡️' },
   { id: 3, name: 'AIRGUARD', desc: 'IoT Air Monitor', color: '#00e676', link: '/work', pos: [9, 2.5, 6], icon: '🌿' },
   { id: 4, name: 'MGSHARE', desc: 'File Transfer', color: '#00d9ff', link: '/work', pos: [-9, 2.5, 6], icon: '📡' },
+  
 ];
 
 /* Utility: smooth damping (frame-rate independent) */
@@ -1725,7 +1726,7 @@ const Preview = () => {
       )}
 
       <div className="preview__next">
-        <Link to="/work" className="preview__next-link">
+        <Link to="/work2" className="preview__next-link">
           <span className="preview__next-label">PROJECTS</span>
           <span className="preview__next-arrow">→</span>
         </Link>

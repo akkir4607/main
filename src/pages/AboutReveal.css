@@ -1,0 +1,236 @@
+/* ============================================================
+   ABOUT REVEAL
+   ============================================================ */
+.about-reveal {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10vh 3vw 12vh; 
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── BG video ── */
+.ar-bg-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ar-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(24px) brightness(0.4);
+  transform: scale(1.2);
+}
+
+.ar-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+}
+
+/* ── Content ── */
+.ar-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1500px; 
+  text-align: center;
+  
+  /* UPDATED: Slightly reduced desktop font size */
+  font-size: clamp(1.5rem, 3vw, 2.4rem); 
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+}
+
+.ar-block {
+  display: inline;
+}
+
+.ar-phrase {
+  display: inline;
+}
+
+/* ── Revealed chunk animation ── */
+.ar-chunk {
+  display: inline;
+  transition: filter 0.85s ease, color 0.85s ease;
+}
+
+/* Hidden text acts as its own perfectly-aligned blurred ghost */
+.ar-chunk.is-blurred {
+  color: rgba(255, 255, 255, 0.07);
+  filter: blur(4px); 
+  pointer-events: none;
+  user-select: none;
+}
+
+.ar-chunk.is-revealed {
+  color: rgba(255, 255, 255, 0.9);
+  filter: blur(0);
+}
+
+.ar-chunk--new {
+  animation: ar-chunk-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ar-chunk-in {
+  0% {
+    color: rgba(255, 255, 255, 0.07);
+    filter: blur(4px);
+  }
+  35% {
+    /* UPDATED: Changed reveal highlight color to a vibrant blue */
+    color: #38bdf8; 
+    filter: blur(0);
+  }
+  100% {
+    color: rgba(255, 255, 255, 0.9);
+    filter: blur(0);
+  }
+}
+
+/* italic / underline inside chunks */
+.ar-chunk em {
+  font-style: italic;
+}
+
+.ar-chunk u,
+.ar-content u {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.ar-paren {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+/* links */
+.ar-content a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: opacity 0.25s ease;
+}
+
+.ar-content a:hover {
+  opacity: 0.55;
+}
+
+/* ── Pills ── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.1em 0.6em 0.16em;
+  margin: 0 0.08em;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.9em; 
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+  white-space: nowrap;
+  vertical-align: baseline;
+  cursor: default;
+  text-decoration: none;
+  transition:
+    background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.3s ease;
+}
+
+/* Active clickable pill */
+.pill.is-trigger {
+  cursor: pointer;
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.pill.is-trigger:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #fff;
+  box-shadow: 0 0 22px rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+.pill.is-trigger:active {
+  transform: scale(0.96);
+}
+
+/* Already clicked */
+.pill.is-done {
+  opacity: 0.85;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.05);
+  cursor: default;
+}
+
+/* Not yet reachable */
+.pill.is-locked {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .about-reveal {
+    padding: 8vh 3vw 10vh;
+    min-height: 100svh;
+  }
+
+  .ar-content {
+    /* UPDATED: Slightly reduced tablet font size */
+    font-size: clamp(1.2rem, 4vw, 1.75rem);
+    line-height: 1.6;
+  }
+
+  .pill {
+    padding: 0.08em 0.48em 0.12em;
+    font-size: 0.88em;
+    border-width: 1.25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ar-content {
+    /* UPDATED: Slightly reduced mobile font size */
+    font-size: clamp(1.05rem, 5vw, 1.4rem);
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .ar-chunk--new {
+    animation: none !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    filter: none !important;
+  }
+
+  .ar-bg-video {
+    display: none;
+  }
+}
