@@ -93,7 +93,7 @@ ul, li {
   flex-direction: column;
   align-items: flex-end;
   padding-right: 3vw;
-  gap: 10px;
+  gap: 30px;
   perspective: 1400px;
   perspective-origin: 50% 30%;
 }
@@ -176,7 +176,7 @@ ul, li {
   display: block;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(4rem, 12vw, 12rem);
+  font-size: clamp(3.5rem, 10vw, 10rem);
   line-height: 0.78;
   letter-spacing: -0.06em;
   text-transform: uppercase;

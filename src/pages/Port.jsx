@@ -7,7 +7,7 @@ import './Port.css'
 
 const projects = [
   { id: '01', year: '', name: 'Preview', url: '/preview' },
-  { id: '02', year: '', name: 'Project', url: '/projects' },
+  { id: '02', year: '', name: 'Project', url: '/Work2' },
   { id: '03', year: '', name: 'About', url: '/about' },
   { id: '04', year: '', name: 'Get in touch', url: '/contact' },
 ]

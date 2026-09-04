@@ -9,8 +9,6 @@ import Image5 from '../images/103.jpeg';
 import Image6 from '../images/104.jpeg';
 import Image7 from '../images/105.jpeg';
 import Image8 from '../images/106.jpeg';
-import Image9 from '../images/110.jpeg';
-import Image10 from '../images/111.jpeg';
 import Image11 from '../images/112.jpeg';
 import Image12 from '../images/113.jpeg';
 import Image13 from '../images/114.jpeg';
@@ -22,112 +20,134 @@ import Image18 from '../images/125.jpg';
 import Image19 from '../images/126.jpeg';
 import Image21 from '../images/1000.jpg';
 
+// New Imports based on the provided image structure
+import Img2000 from '../images/2000.JPG';
+import Img2002 from '../images/2002.JPG';
+import Img2003 from '../images/2003.JPG';
+import Img2004 from '../images/2004.JPG';
+import Img2005 from '../images/2005.JPG';
+import Img2006 from '../images/2006.JPG';
+import Img2007 from '../images/2007.JPG';
+import Img2008 from '../images/2008.JPG';
+import Img2009 from '../images/2009.jpg';
+import Img2010 from '../images/2010.jpg';
+import Img2011 from '../images/2011.jpg';
+import Img2012 from '../images/2012.jpg';
+import Img2013 from '../images/2013.jpg';
+import Img2014 from '../images/2014.jpg';
+
 const About = () => {
   const navigate = useNavigate();
-  const [isVisible, setIsVisible] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hoveredItem, setHoveredItem] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const scrollPositionRef = useRef(0);
+  const sectionRef = useRef(null);
 
   const experiences = [
     {
       id: 1,
-      title: 'Organising Hackathon',
+      title: 'Hackathon Coordinator – HackCraft 3.0',
       description:
-        'Led the successful organization of a major hackathon at GITM, demonstrating strong leadership, coordination, and team management skills.',
+        'Organized and coordinated HackCraft 3.0, managing event logistics and facilitating a collaborative environment.',
       fullDescription:
-        'Hackathon Organizer Global Institute of Technology and Management Led the successful organization of a major hackathon at GITM, demonstrating strong leadership, coordination, and team management skills. Oversaw end-to-end planning, from ideation to execution, engaging participants in innovation, problem-solving, and collaboration while ensuring smooth event management.',
-      year: '2024',
-      rarity: 'EPIC',
-      xp: '+850',
-      images: [Image1, Image2, Image3],
+        'Served as the coordinator for HackCraft 3.0. Directed event logistics, managed team communications, and facilitated a dynamic environment to encourage innovative problem-solving among participants, ensuring a smooth and impactful hackathon experience.',
+      year: '2025',
+      category: 'LEADERSHIP',
+      role: 'Coordinator',
+      // 2009 is placed first so it acts as the preview image
+      images: [Img2009, Img2000, Img2002, Img2003, Img2004, Img2005, Img2006, Img2007, Img2008],
     },
     {
       id: 2,
-      title: 'Industry Visit – Honeywell India',
-      description:
-        'Gained firsthand exposure to advanced technological solutions and innovation-driven practices at Honeywell India.',
-      fullDescription:
-        'Engaged in an insightful industry visit to Honeywell India, gaining firsthand exposure to advanced technological solutions and innovation-driven practices. This experience provided a deeper understanding of industrial applications, enriched technical knowledge, and fostered meaningful professional connections for future growth in technology.',
-      year: '2024',
-      rarity: 'RARE',
-      xp: '+620',
-      images: [Image6, Image5, Image7, Image8],
-    },
-    {
-      id: 3,
-      title: 'StarkSeek x HackCraft Pre-Hackathon Meet-up',
-      description:
-        'Organized expert sessions on UI/UX and DevOps in collaboration with StarkSeek and Microsoft Azure Community.',
-      fullDescription:
-        'Organized by Team Sankalp in collaboration with StarkSeek and supported by Microsoft Azure Community, this meet-up provided tech enthusiasts with expert sessions on UI/UX and DevOps, insights into the StarkSeek community, and an introduction to HackCraft 2.0, fostering learning, networking, and innovation ahead of the main hackathon.',
-      year: '2021',
-      rarity: 'RARE',
-      xp: '+540',
-      images: [Image17, Image18, Image19],
-    },
-    {
-      id: 4,
-      title: "1st Place – Innoverse'36 Hackathon",
+      title: "1st Place – SGT 36-Hour Hackathon",
       description:
         'Secured 1st place at Innoverse\'36, a 36-hour national-level hackathon hosted by SGT University.',
       fullDescription:
         'As part of Team Byte Wizards, secured 1st place at Innoverse\'36, a 36-hour national-level hackathon hosted by SGT University. Our project focused on IoT-driven innovation, where we designed and developed a fully functional web and Android application under tight deadlines.',
       year: '2025',
-      rarity: 'LEGENDARY',
-      xp: '+1500',
-      images: [Image9, Image10],
+      category: 'WINNER',
+      role: 'Team Lead',
+      images: [Img2010, Img2011, Img2012, Img2013, Img2014],
     },
     {
-      id: 5,
-      title: 'Hackathon Organizer – HackCraft 2.0',
-      description:
-        'Demonstrated strong leadership by guiding teams, managing events, and driving innovation-focused initiatives.',
-      fullDescription:
-        'Demonstrated strong leadership by guiding teams, managing events, and driving innovation-focused initiatives. Skilled in decision-making, team coordination, problem-solving, and conflict resolution, with the ability to inspire and motivate peers toward achieving collective goals.',
-      year: '2025',
-      rarity: 'EPIC',
-      xp: '+1200',
-      images: [Image15, Image11, Image14, Image13, Image12],
-    },
-    {
-      id: 6,
-      title: 'Data Analytics Internship – KPMG',
-      description:
-        'Gained hands-on experience with real-world data analytics projects and applied analytical skills.',
-      fullDescription:
-        'Completed a virtual internship in Data Analytics at KPMG, gaining hands-on experience with real-world projects and applying analytical skills to derive meaningful insights. Collaborated with industry professionals, enhanced technical expertise, and acquired practical knowledge in data-driven decision-making.',
-      year: '2023',
-      rarity: 'RARE',
-      xp: '+900',
-      images: [Image16],
-    },
-    {
-      id: 7,
+      id: 3,
       title: 'SnapAR Workshop – Team Eklavya',
       description:
         'Co-organized the SnapAR workshop exploring AR creation using Snapchat Lens Studio.',
       fullDescription:
         'Co-organized and partnered as community lead for the SnapAR workshop at GITM, Gurgaon, featuring Chhavi Garg (Co-Founder, BharatXR & Arexa). The session explored AR creation using Snapchat Lens Studio, creator collaboration, monetization, and XR career pathways.',
       year: '2023',
-      rarity: 'UNCOMMON',
-      xp: '+780',
+      category: 'WORKSHOP',
+      role: 'Community Lead',
       images: [Image21],
+    },
+    {
+      id: 4,
+      title: 'Organising Hackathon',
+      description:
+        'Led the successful organization of a major hackathon at GITM, demonstrating strong leadership, coordination, and team management skills.',
+      fullDescription:
+        'Hackathon Organizer Global Institute of Technology and Management Led the successful organization of a major hackathon at GITM, demonstrating strong leadership, coordination, and team management skills. Oversaw end-to-end planning, from ideation to execution, engaging participants in innovation, problem-solving, and collaboration while ensuring smooth event management.',
+      year: '2024',
+      category: 'LEADERSHIP',
+      role: 'Organizer',
+      images: [Image1, Image2, Image3],
+    },
+    {
+      id: 5,
+      title: 'Industry Visit – Honeywell India',
+      description:
+        'Gained firsthand exposure to advanced technological solutions and innovation-driven practices at Honeywell India.',
+      fullDescription:
+        'Engaged in an insightful industry visit to Honeywell India, gaining firsthand exposure to advanced technological solutions and innovation-driven practices. This experience provided a deeper understanding of industrial applications, enriched technical knowledge, and fostered meaningful professional connections for future growth in technology.',
+      year: '2024',
+      category: 'INDUSTRY',
+      role: 'Visitor',
+      images: [Image6, Image5, Image7, Image8],
+    },
+    {
+      id: 6,
+      title: 'StarkSeek x HackCraft Meet-up',
+      description:
+        'Organized expert sessions on UI/UX and DevOps in collaboration with StarkSeek and Microsoft Azure Community.',
+      fullDescription:
+        'Organized by Team Sankalp in collaboration with StarkSeek and supported by Microsoft Azure Community, this meet-up provided tech enthusiasts with expert sessions on UI/UX and DevOps, insights into the StarkSeek community, and an introduction to HackCraft 2.0, fostering learning, networking, and innovation ahead of the main hackathon.',
+      year: '2021',
+      category: 'COMMUNITY',
+      role: 'Co-Organizer',
+      images: [Image17, Image18, Image19],
+    },
+    {
+      id: 7,
+      title: 'Hackathon Organizer – HackCraft 2.0',
+      description:
+        'Demonstrated strong leadership by guiding teams, managing events, and driving innovation-focused initiatives.',
+      fullDescription:
+        'Demonstrated strong leadership by guiding teams, managing events, and driving innovation-focused initiatives. Skilled in decision-making, team coordination, problem-solving, and conflict resolution, with the ability to inspire and motivate peers toward achieving collective goals.',
+      year: '2025',
+      category: 'LEADERSHIP',
+      role: 'Lead Organizer',
+      images: [Image15, Image11, Image14, Image13, Image12],
+    },
+    {
+      id: 8,
+      title: 'Data Analytics – KPMG',
+      description:
+        'Gained hands-on experience with real-world data analytics projects and applied analytical skills.',
+      fullDescription:
+        'Completed a virtual internship in Data Analytics at KPMG, gaining hands-on experience with real-world projects and applying analytical skills to derive meaningful insights. Collaborated with industry professionals, enhanced technical expertise, and acquired practical knowledge in data-driven decision-making.',
+      year: '2023',
+      category: 'INTERNSHIP',
+      role: 'Intern',
+      images: [Image16],
     },
   ];
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 200);
-    return () => clearTimeout(timer);
-  }, []);
-
   const openModal = (experience) => {
-    // Save current scroll position
     scrollPositionRef.current = window.scrollY;
-
-    // Lock body in place at current scroll
     document.body.style.position = 'fixed';
     document.body.style.top = `-${scrollPositionRef.current}px`;
     document.body.style.left = '0';
@@ -141,17 +161,13 @@ const About = () => {
   };
 
   const closeModal = () => {
-    // Unlock body
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.left = '';
     document.body.style.right = '';
     document.body.style.width = '';
     document.body.style.overflow = '';
-
-    // Restore scroll position instantly
     window.scrollTo(0, scrollPositionRef.current);
-
     setIsModalOpen(false);
     setSelectedExperience(null);
   };
@@ -179,13 +195,13 @@ const About = () => {
     setTimeout(() => navigate('/contact'), 400);
   };
 
-  const getRarityColor = (rarity) => {
-    switch (rarity) {
-      case 'LEGENDARY': return '#ffaa00';
-      case 'EPIC': return '#b344f0';
-      case 'RARE': return '#3baaff';
-      case 'UNCOMMON': return '#55cc44';
-      default: return '#aaaaaa';
+  const handleMouseMove = (e) => {
+    if (sectionRef.current) {
+      const rect = sectionRef.current.getBoundingClientRect();
+      setMousePos({
+        x: ((e.clientX - rect.left) / rect.width) * 100,
+        y: ((e.clientY - rect.top) / rect.height) * 100,
+      });
     }
   };
 
@@ -200,7 +216,6 @@ const About = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalOpen, selectedExperience]);
 
-  // Cleanup on unmount to ensure body isn't stuck locked
   useEffect(() => {
     return () => {
       document.body.style.position = '';
@@ -235,92 +250,112 @@ const About = () => {
         </div>
       </section>
 
-      {/* ====== EXPERIENCE SECTION — MINECRAFT ====== */}
-      <section className="mc-experience-section">
-        <div className="mc-dirt-top"></div>
-        <div className="mc-floating-blocks">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className={`mc-float-block mc-fb-${i + 1}`}></div>
-          ))}
-        </div>
+      {/* ====== EXPERIENCE SECTION ====== */}
+      <section
+        className="xp-section"
+        ref={sectionRef}
+        onMouseMove={handleMouseMove}
+      >
+        {/* Animated gradient orbs */}
+        <div className="xp-orb xp-orb-1"></div>
+        <div className="xp-orb xp-orb-2"></div>
+        <div className="xp-orb xp-orb-3"></div>
 
-        <div className="mc-torch mc-torch-left">
-          <div className="mc-torch-flame"></div>
-          <div className="mc-torch-stick"></div>
-        </div>
-        <div className="mc-torch mc-torch-right">
-          <div className="mc-torch-flame"></div>
-          <div className="mc-torch-stick"></div>
-        </div>
+        {/* Grid overlay */}
+        <div className="xp-grid-bg"></div>
 
-        <div className="mc-container">
+        {/* Cursor glow */}
+        <div
+          className="xp-cursor-glow"
+          style={{
+            left: `${mousePos.x}%`,
+            top: `${mousePos.y}%`,
+          }}
+        ></div>
+
+        <div className="xp-container">
           {/* Header */}
-          <div className="mc-header">
-            <div className="mc-header-bar">
-              <span className="mc-header-icon">⛏</span>
-              <span className="mc-header-subtitle">ADVENTURE LOG</span>
-              <span className="mc-header-icon">⚔</span>
+          <div className="xp-header">
+            <div className="xp-header-line">
+              <span className="xp-line-dot"></span>
+              <span className="xp-header-tag">SELECTED WORK · 2021 — 2025</span>
+              <span className="xp-line-dot"></span>
             </div>
-            <h2 className="mc-title" data-text="Experience">
-              Experience
+
+            <h2 className="xp-title">
+              <span className="xp-title-word" data-text="Experience">
+                Experience
+              </span>
             </h2>
-            <div className="mc-xp-bar-wrapper">
-              <div className="mc-xp-bar">
-                <div className="mc-xp-fill"></div>
-              </div>
-              <span className="mc-xp-text">Level 42</span>
-            </div>
-            <div className="mc-hearts">
-              {[...Array(10)].map((_, i) => (
-                <span key={i} className="mc-heart">❤</span>
-              ))}
-            </div>
+
+            <p className="xp-subtitle">
+              A curated journey through hackathons, internships, and
+              community-driven initiatives.
+            </p>
           </div>
 
-          {/* Grid */}
-          <div className="mc-grid">
+          {/* Cards Grid */}
+          <div className="xp-cards">
             {experiences.map((exp, index) => (
               <div
                 key={exp.id}
-                className={`mc-item ${hoveredItem === exp.id ? 'mc-item-hovered' : ''}`}
+                className={`xp-card ${activeIndex === index ? 'xp-card-active' : ''}`}
                 onClick={() => openModal(exp)}
-                onMouseEnter={() => setHoveredItem(exp.id)}
-                onMouseLeave={() => setHoveredItem(null)}
-                style={{ animationDelay: `${index * 0.12}s` }}
+                onMouseEnter={() => setActiveIndex(index)}
               >
-                <div className="mc-item-slot">
-                  <span className="mc-item-num">{exp.id.toString().padStart(2, '0')}</span>
-                  <div
-                    className="mc-rarity-stripe"
-                    style={{ background: getRarityColor(exp.rarity) }}
-                  ></div>
-                </div>
-                <div className="mc-item-info">
-                  <div className="mc-item-top-row">
-                    <span
-                      className="mc-rarity-badge"
-                      style={{ color: getRarityColor(exp.rarity), borderColor: getRarityColor(exp.rarity) }}
-                    >
-                      {exp.rarity}
-                    </span>
-                    <span className="mc-item-xp">{exp.xp} XP</span>
-                  </div>
-                  <h3 className="mc-item-title">{exp.title}</h3>
-                  <p className="mc-item-desc">{exp.description}</p>
-                  <span className="mc-item-year">⏳ {exp.year}</span>
-                </div>
-                <div className="mc-item-arrow">▶</div>
-
-                {hoveredItem === exp.id && (
-                  <div className="mc-tooltip">
-                    <div className="mc-tooltip-title">{exp.title}</div>
-                    <div className="mc-tooltip-rarity" style={{ color: getRarityColor(exp.rarity) }}>
-                      {exp.rarity}
+                <div className="xp-card-inner">
+                  {/* Image side */}
+                  <div className="xp-card-media">
+                    <img
+                      src={exp.images[0]}
+                      alt={exp.title}
+                      className="xp-card-img"
+                      loading="lazy"
+                    />
+                    <div className="xp-card-media-overlay"></div>
+                    <div className="xp-card-count">
+                      <span>{exp.images.length}</span>
+                      <span className="xp-count-label">
+                        {exp.images.length > 1 ? 'PHOTOS' : 'PHOTO'}
+                      </span>
                     </div>
-                    <div className="mc-tooltip-line">Click to view gallery</div>
-                    <div className="mc-tooltip-xp">{exp.xp} XP</div>
                   </div>
-                )}
+
+                  {/* Content side */}
+                  <div className="xp-card-content">
+                    <div className="xp-card-top">
+                      <span className="xp-card-num">
+                        {String(exp.id).padStart(2, '0')}
+                      </span>
+                      <span className="xp-card-category">{exp.category}</span>
+                    </div>
+
+                    <h3 className="xp-card-title">{exp.title}</h3>
+                    <p className="xp-card-desc">{exp.description}</p>
+
+                    <div className="xp-card-bottom">
+                      <div className="xp-card-meta">
+                        <span className="xp-card-year">{exp.year}</span>
+                        <span className="xp-card-dot">·</span>
+                        <span className="xp-card-role">{exp.role}</span>
+                      </div>
+                      <div className="xp-card-arrow">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M5 12h14M13 5l7 7-7 7"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Hover border glow */}
+                  <div className="xp-card-glow"></div>
+                </div>
               </div>
             ))}
           </div>
@@ -346,104 +381,129 @@ const About = () => {
         </div>
       </section>
 
-      {/* ====== MODAL — MINECRAFT STYLE ====== */}
+      {/* ====== MODAL ====== */}
       {isModalOpen && selectedExperience && (
         <div
-          className="mc-modal-overlay"
+          className="xp-modal-overlay"
           onClick={(e) => {
             e.preventDefault();
             closeModal();
           }}
         >
-          <div
-            className="mc-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Title Bar */}
-            <div className="mc-modal-titlebar">
-              <span className="mc-modal-titlebar-text">{selectedExperience.title}</span>
-              <button
-                type="button"
-                className="mc-modal-close-btn"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  closeModal();
-                }}
-              >
-                ✕
-              </button>
-            </div>
+          <div className="xp-modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="xp-modal-close"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                closeModal();
+              }}
+              aria-label="Close"
+            >
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M18 6L6 18M6 6l12 12"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
 
-            {/* Body */}
-            <div className="mc-modal-body">
-              <div className="mc-modal-img-wrap">
-                {selectedExperience.images.length > 1 && (
+            <div className="xp-modal-media">
+              {selectedExperience.images.length > 1 && (
+                <>
                   <button
                     type="button"
-                    className="mc-modal-nav mc-nav-prev"
+                    className="xp-modal-nav xp-modal-prev"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       prevImage();
                     }}
+                    aria-label="Previous"
                   >
-                    ◀
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M15 18l-6-6 6-6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
                   </button>
-                )}
-                <img
-                  src={selectedExperience.images[currentImageIndex]}
-                  alt={`${selectedExperience.title} ${currentImageIndex + 1}`}
-                  className="mc-modal-img"
-                />
-                {selectedExperience.images.length > 1 && (
                   <button
                     type="button"
-                    className="mc-modal-nav mc-nav-next"
+                    className="xp-modal-nav xp-modal-next"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       nextImage();
                     }}
+                    aria-label="Next"
                   >
-                    ▶
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M9 6l6 6-6 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
                   </button>
-                )}
-              </div>
+                </>
+              )}
+
+              <img
+                key={currentImageIndex}
+                src={selectedExperience.images[currentImageIndex]}
+                alt={`${selectedExperience.title} ${currentImageIndex + 1}`}
+                className="xp-modal-img"
+              />
 
               {selectedExperience.images.length > 1 && (
-                <div className="mc-modal-dots">
+                <div className="xp-modal-counter">
+                  {String(currentImageIndex + 1).padStart(2, '0')} /{' '}
+                  {String(selectedExperience.images.length).padStart(2, '0')}
+                </div>
+              )}
+            </div>
+
+            <div className="xp-modal-body">
+              <div className="xp-modal-tags">
+                <span className="xp-modal-tag">{selectedExperience.category}</span>
+                <span className="xp-modal-tag xp-modal-tag-alt">
+                  {selectedExperience.year}
+                </span>
+                <span className="xp-modal-tag xp-modal-tag-alt">
+                  {selectedExperience.role}
+                </span>
+              </div>
+
+              <h3 className="xp-modal-title">{selectedExperience.title}</h3>
+
+              <p className="xp-modal-desc">
+                {selectedExperience.fullDescription}
+              </p>
+
+              {selectedExperience.images.length > 1 && (
+                <div className="xp-modal-dots">
                   {selectedExperience.images.map((_, i) => (
                     <button
                       key={i}
                       type="button"
-                      className={`mc-modal-dot ${i === currentImageIndex ? 'active' : ''}`}
+                      className={`xp-modal-dot ${i === currentImageIndex ? 'active' : ''}`}
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         goToImage(i);
                       }}
+                      aria-label={`Image ${i + 1}`}
                     />
                   ))}
                 </div>
               )}
-
-              <div className="mc-modal-meta">
-                <span
-                  className="mc-modal-rarity"
-                  style={{ color: getRarityColor(selectedExperience.rarity) }}
-                >
-                  ◆ {selectedExperience.rarity}
-                </span>
-                <span className="mc-modal-year">⏳ {selectedExperience.year}</span>
-                <span className="mc-modal-xp">{selectedExperience.xp} XP</span>
-              </div>
-
-              <p className="mc-modal-description">{selectedExperience.fullDescription}</p>
-
-              <div className="mc-modal-counter">
-                {currentImageIndex + 1} / {selectedExperience.images.length}
-              </div>
             </div>
           </div>
         </div>

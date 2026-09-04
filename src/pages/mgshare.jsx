@@ -512,12 +512,12 @@ const MGShare = () => {
             NEXT UP
           </span>
 
-          <Link to="/about" className="mgshare__next-link">
+          <Link to="/z" className="mgshare__next-link">
             <span className="mgshare__next-meta">
-              <span className="mgshare__next-year">2023</span>
+              <span className="mgshare__next-year">2025</span>
               <span className="mgshare__next-slash">/</span>
             </span>
-            <span className="mgshare__next-name">ABOUT</span>
+            <span className="mgshare__next-name">Linkbit</span>
           </Link>
         </div>
       </div>

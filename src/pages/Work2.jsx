@@ -31,6 +31,14 @@ const projects = [
     route: '/mgshare',
     tags: ['Network', 'P2P', 'Java'],
   },
+  {
+    id: '05',
+    title: 'LinkBit',
+    category: 'NETWORKING & REAL-TIME CHATTING PLATFORM',
+    route: '/z',
+    tags: ['Chat', 'Networking', 'React'],
+  },
+  
 ];
 
 const Work2 = () => {
