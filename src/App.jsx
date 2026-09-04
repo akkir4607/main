@@ -33,16 +33,16 @@ function SmoothScrollManager() {
   const location = useLocation();
 
   useEffect(() => {
-    // Initialize Lenis Smooth Scroll
+    // Initialize Lenis
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // smooth ease-out expo
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 1.6, // fluid acceleration on mobile touch
-      infinite: false,
+      touchMultiplier: 2,
+      syncTouch: false, // Ensures native responsive scrolling on mobile touch screens
     });
 
     window.lenis = lenis;
@@ -54,17 +54,28 @@ function SmoothScrollManager() {
     }
     animationFrameId = requestAnimationFrame(raf);
 
+    // Recalculate height on window resize (e.g. mobile URL bar collapsing)
+    const handleResize = () => {
+      lenis.resize();
+    };
+    window.addEventListener('resize', handleResize);
+
     return () => {
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
       lenis.destroy();
       window.lenis = null;
     };
   }, []);
 
-  // Instantly scroll to top when changing routes
+  // Scroll to top and refresh dimensions when navigating to a new route
   useEffect(() => {
     if (window.lenis) {
       window.lenis.scrollTo(0, { immediate: true });
+      // Allow dynamic route components to mount before measuring page height
+      setTimeout(() => {
+        window.lenis?.resize();
+      }, 100);
     } else {
       window.scrollTo(0, 0);
     }
@@ -150,6 +161,7 @@ export default function App() {
     setLoading(false);
     setTimeout(() => {
       startMusic();
+      window.lenis?.resize();
     }, 100);
   };
 
@@ -158,36 +170,6 @@ export default function App() {
   // ============================================================
   return (
     <>
-      {/* Global CSS optimizations for smooth scrolling and mobile responsiveness */}
-      <style>{`
-        html.lenis, html.lenis body {
-          height: auto;
-        }
-        .lenis.lenis-smooth {
-          scroll-behavior: auto !important;
-        }
-        .lenis.lenis-smooth [data-lenis-prevent] {
-          overscroll-behavior: contain;
-        }
-        .lenis.lenis-stopped {
-          overflow: hidden;
-        }
-        .lenis.lenis-scrolling iframe {
-          pointer-events: none;
-        }
-        html, body {
-          overflow-x: hidden;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .main-content {
-          will-change: transform;
-          transform: translateZ(0);
-          backface-visibility: hidden;
-        }
-      `}</style>
-
       <audio
         ref={audioRef}
         src={m10}

@@ -1,11 +1,14 @@
 @import "tailwindcss";
-/* Smooth scroll optimizations */
-html.lenis, html.lenis body {
+@import "lenis/dist/lenis.css";
+
+/* Lenis smooth scroll requirements */
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
 .lenis.lenis-smooth {
-  scroll-behavior: auto !important;
+  scroll-behavior: auto !important; /* CRITICAL: Never set to 'smooth' with Lenis */
 }
 
 .lenis.lenis-smooth [data-lenis-prevent] {
@@ -20,36 +23,31 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* Performance boost */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-html, body {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: none;
-}
-
-body {
+/* Base styles & Mobile fixes */
+html {
+  scroll-behavior: auto !important;
   overflow-x: hidden;
 }
 
-/* GPU acceleration for smooth animations */
-.main-content {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Smooth images */
+/* Main container without transform traps */
+.main-content {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Smooth un-draggable images */
 img {
   -webkit-user-drag: none;
   user-select: none;
-}
-
-/* Prevent flicker on mobile */
-* {
-  -webkit-tap-highlight-color: transparent;
 }
